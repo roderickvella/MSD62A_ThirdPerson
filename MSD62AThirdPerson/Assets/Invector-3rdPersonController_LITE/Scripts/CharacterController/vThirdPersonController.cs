@@ -124,7 +124,5 @@ namespace Invector.vCharacterController
             else
                 animator.CrossFadeInFixedTime("JumpMove", .2f);
         }
-
-      
     }
 }

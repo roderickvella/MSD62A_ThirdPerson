@@ -10,9 +10,8 @@ namespace Invector.vCharacterController
         public string horizontalInput = "Horizontal";
         public string verticallInput = "Vertical";
         public KeyCode jumpInput = KeyCode.Space;
-        public KeyCode strafeInput = KeyCode.None;
+        public KeyCode strafeInput = KeyCode.Tab;
         public KeyCode sprintInput = KeyCode.LeftShift;
-        public bool inputEnabled = true; //added by roderick
 
         [Header("Camera Input")]
         public string rotateCameraXInput = "Mouse X";
@@ -75,25 +74,11 @@ namespace Invector.vCharacterController
 
         protected virtual void InputHandle()
         {
+            MoveInput();
             CameraInput();
-
-            //if..statement added by roderick to enable/disable input by the user 
-            if (inputEnabled)  
-            {
-                MoveInput();
-                SprintInput();
-                //StrafeInput(); --we don't need this for our project. 
-                JumpInput();
-            }
-            else
-            {
-                //if input disabled then reset to no movement
-                cc.input.x = 0f;
-                cc.input.z = 0f;
-                cc.Sprint(false);
-            }
-
-            
+            SprintInput();
+            StrafeInput();
+            JumpInput();
         }
 
         public virtual void MoveInput()
