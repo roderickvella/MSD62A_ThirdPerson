@@ -9,7 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2f22f37f63bcec14080b11ce5e381ce6, type: 3}
-  m_Name: vEditorStartupPrefs
+  m_Script: {fileID: 11500000, guid: 736a7ab00b81b470dac61d39ec34aee9, type: 3}
+  m_Name: MediumMana
   m_EditorClassIdentifier: 
-  displayWelcomeScreen: 0
+  title: Medium Mana
+  icon: {fileID: 21300000, guid: e176e67e5fd9fd846bec5e649dc2197a, type: 3}
+  increaseValue: 50
+  type: 1
