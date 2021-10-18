@@ -22,6 +22,14 @@ public class InventoryManager : MonoBehaviour
 
     private List<InventoryItem> itemsForPlayer;
 
+    [Tooltip("Default Colour")]
+    public Color notSelectedColor;
+
+    [Tooltip("Selected Colour")]
+    public Color SelectedColor;
+
+    private int currentSelectedIndex = 0;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -31,6 +39,40 @@ public class InventoryManager : MonoBehaviour
 
     }
 
+    private void OnEnable()
+    {
+        InputManager.KeyDown += ObservorKeyDown;
+    }
+
+    private void OnDisable()
+    {
+        InputManager.KeyDown -= ObservorKeyDown;
+    }
+
+    private void ObservorKeyDown(KeyCode keyCode)
+    {
+        print("pressed key:" + keyCode.ToString());
+
+        if(keyCode==KeyCode.J || keyCode == KeyCode.K)
+        {
+            ChangeSelection(keyCode);
+        }
+
+
+    }
+
+    private void ChangeSelection(KeyCode keyCode)
+    {
+        if (keyCode == KeyCode.J)
+            currentSelectedIndex -= 1;
+        else if (keyCode == KeyCode.K)
+            currentSelectedIndex += 1;
+
+        //refresh GUI to show current selected colour
+        RefreshInventoryGUI();
+    }
+
+
     private void RefreshInventoryGUI()
     {
         int buttonId = 0;
@@ -39,6 +81,13 @@ public class InventoryManager : MonoBehaviour
             GameObject button = itemsSelectionPanel.transform.Find("Button" + buttonId).gameObject;
             button.transform.Find("Image").GetComponent<Image>().sprite = i.item.icon;
             button.transform.Find("Quantity").GetComponent<TextMeshProUGUI>().text = "x"+ i.quantity;
+
+            //change colour if buttonId is the same as currentSelectedIndex
+            if (buttonId == currentSelectedIndex)
+                button.GetComponent<Image>().color = SelectedColor; //change to green
+            else
+                button.GetComponent<Image>().color = notSelectedColor; //change to white
+
             buttonId += 1;
         }
 
