@@ -30,6 +30,11 @@ public class InventoryManager : MonoBehaviour
 
     private int currentSelectedIndex = 0;
 
+
+    [Tooltip("Show inventory GUI")]
+    public bool showInventory = false;
+    private Animator animator;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -37,6 +42,22 @@ public class InventoryManager : MonoBehaviour
         PopulateInventorySpawn();
         RefreshInventoryGUI();
 
+        animator = itemsSelectionPanel.GetComponent<Animator>();
+
+    }
+
+    public void ShowToggleInventory()
+    {
+        if(showInventory == false)
+        {
+            showInventory = true;
+            animator.SetTrigger("InventoryIn");
+        }
+        else
+        {
+            showInventory = false;
+            animator.SetTrigger("InventoryOut");
+        }
     }
 
     private void OnEnable()
@@ -57,8 +78,29 @@ public class InventoryManager : MonoBehaviour
         {
             ChangeSelection(keyCode);
         }
+        else if(keyCode == KeyCode.Return)
+        {
+            ConfirmSelection();
+        }
 
 
+    }
+
+    private void ConfirmSelection()
+    {
+        InventoryItem currentSelectedItem = itemsForPlayer[currentSelectedIndex];
+        print("Item selected is:" + currentSelectedItem.item.name);
+        //reduce the quantity
+        currentSelectedItem.quantity -= 1;
+
+        //if quantity is 0 then delete from array
+        if(currentSelectedItem.quantity == 0)
+        {
+            itemsForPlayer.RemoveAt(currentSelectedIndex);
+        }
+
+        //refresh screen with new quantities
+        RefreshInventoryGUI();
     }
 
     private void ChangeSelection(KeyCode keyCode)
@@ -67,6 +109,13 @@ public class InventoryManager : MonoBehaviour
             currentSelectedIndex -= 1;
         else if (keyCode == KeyCode.K)
             currentSelectedIndex += 1;
+
+        //check boundaries
+        if (currentSelectedIndex < 0)
+            currentSelectedIndex = 0;
+
+        if (currentSelectedIndex == itemsForPlayer.Count)
+            currentSelectedIndex = currentSelectedIndex - 1;
 
         //refresh GUI to show current selected colour
         RefreshInventoryGUI();
