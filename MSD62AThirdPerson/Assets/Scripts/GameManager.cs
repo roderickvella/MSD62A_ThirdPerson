@@ -4,10 +4,11 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    public static GameObject Canvas;
     // Start is called before the first frame update
     void Start()
     {
-        
+        Canvas = GameObject.Find("Canvas");
     }
 
     private void OnEnable()
