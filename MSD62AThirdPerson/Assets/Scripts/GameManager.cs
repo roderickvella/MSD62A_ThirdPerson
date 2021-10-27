@@ -5,10 +5,17 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public static GameObject Canvas;
+
+    public List<Vector3> PandoraSpawnBoxes;
+    public GameObject PandoraBoxPrefab;
+    public GameObject PandoraBoxesPlaceHolder;
+
+
     // Start is called before the first frame update
     void Start()
     {
         Canvas = GameObject.Find("Canvas");
+        SpawnPandoraBoxes();
     }
 
     private void OnEnable()
@@ -26,6 +33,17 @@ public class GameManager : MonoBehaviour
         if(keyCode == KeyCode.Tab)
         {
             ShowToggleInventory();
+        }
+    }
+
+    private void SpawnPandoraBoxes()
+    {
+        for(int i = 0; i < PandoraSpawnBoxes.Count; i++)
+        {
+            //spawn the object
+            GameObject spawnedObject = Instantiate(PandoraBoxPrefab, PandoraSpawnBoxes[i], Quaternion.identity);
+            //make the spawnobject as a child of pandoraboxes placeholder
+            spawnedObject.transform.parent = PandoraBoxesPlaceHolder.transform;
         }
     }
 
