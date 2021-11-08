@@ -260,6 +260,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   initialForce: 600
   lifeTime: 0.5
+  explosionPrefab: {fileID: 6642167604334163890, guid: b24ffa9a6c1d9408bbaaba0cc66edf19, type: 3}
 --- !u!1 &4397412803440743554
 GameObject:
   m_ObjectHideFlags: 0
